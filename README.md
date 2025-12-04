@@ -1,0 +1,1 @@
+Using the constraint API to validate forms on the client side, so that when a user is filling a form, they can know whether what they have filled is what is required

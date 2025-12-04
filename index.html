@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Form Validation</title>
+    </head>
+    <body>
+        <form action="" novalidate>
+            <div>
+                <label for="mail">Please provide your Email: </label>
+                <input type="email" required name="mail" id="mail">
+            </div>
+            <div>
+                <label for="password">Please provide your password: </label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <div>
+                <label for="confirmPassword">Please confirm Your password: </label>
+                <input type="password" name="confirmPsw" id="confirmPassword" required>
+            </div>
+
+            <div>
+                <label for="country">Please provide name of your country: </label>
+                <select name="country" id="country" required>
+                    <option value="DZ">Algeria </option>
+                    <option value="US">Uited States</option>
+                    <option value="AU">Australia</option>
+                    <option value="BE">Belgium</option>
+                    <option value="CA">Canada</option>
+                    <option value="CN">China</option>
+                    <option value="ES">Spain</option>
+                    <option value="ET">Ethiopia</option>
+                    <option value="GE">Georgia</option>
+                    <option value="KE" selected>Kenya</option>
+                </select>
+            </div>
+            
+
+            <div>
+                <label for="postalCode">Enter your country's postal code</label>
+                <input type="text" name="postalcode" id="postalCode" required>
+            </div>
+
+            <button type="submit">Submit</button>
+            
+        </form>
+    </body>
+</html>
