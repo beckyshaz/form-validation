@@ -4,24 +4,26 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Form Validation</title>
+        <script src="index.js" defer></script>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <form action="" novalidate>
-            <div>
+        <form novalidate class="form" action="">
+            <div class="emailDiv">
                 <label for="mail">Please provide your Email: </label>
                 <input type="email" required name="mail" id="mail">
             </div>
-            <div>
+            <div class="passwordDiv">
                 <label for="password">Please provide your password: </label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="password" id="password" required minlength="8">
             </div>
 
-            <div>
+            <div class="confirmPswdDiv">
                 <label for="confirmPassword">Please confirm Your password: </label>
-                <input type="password" name="confirmPsw" id="confirmPassword" required>
+                <input type="password" name="confirmPsw" id="confirmPassword" required minlength="8">
             </div>
 
-            <div>
+            <div class="countryDiv">
                 <label for="country">Please provide name of your country: </label>
                 <select name="country" id="country" required>
                     <option value="DZ">Algeria </option>
@@ -38,12 +40,12 @@
             </div>
             
 
-            <div>
+            <div class="postalCodesDiv">
                 <label for="postalCode">Enter your country's postal code</label>
                 <input type="text" name="postalcode" id="postalCode" required>
             </div>
 
-            <button type="submit">Submit</button>
+            <button type="submit" class="submitBtn">Submit</button>
             
         </form>
     </body>

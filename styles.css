@@ -1,0 +1,20 @@
+input:invalid {
+    border: 2px solid red;
+}
+
+input:valid {
+    border: 2px solid green;
+}
+
+input:focus:valid {
+    outline: green;
+}
+
+
+input:focus:invalid {
+    outline: red;
+}
+
+input {
+    border-color: none;
+}
