@@ -1,15 +1,15 @@
-const postalCodes = {
-    DZ:"^\d{5}$",
-    US:"^\d{5}([\-]?\d{4})?$",
-    AU:"^\d{4}$",
-    BE:"^[1-9]{1}[0-9]{3}$",
-    CA:"^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$",
-    CN:"^\d{6}$",
-    ES:"^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$",
-    GE:"^\d{4}$",
-    ET: "^\d{4}$",
-    KE:"^\d{5}$",
-}
+const postalCodes = [
+    { DZ: "^\\d{5}$" },
+    { US: "^\\d{5}([\-]?\\d{4})?$" },
+    { AU:"^\\d{4}$" },
+    { BE:"^[1-9]{1}[0-9]{3}$" },
+    { CA:"^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$" },
+    { CN:"^\\d{6}$" },
+    { ES:"^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$" },
+    { GE:"^\\d{4}$" },
+    { ET: "^\\d{4}$" },
+    { KE:"^\\d{5}$" },
+]
 
 const form = document.querySelector(".form");
 
@@ -38,17 +38,48 @@ emailInput.addEventListener("input", () => {
 
 })
 
+postalCodeInput.addEventListener("input", (event) => {
+    const userPostalCode = event.target.value;
+    console.log(userPostalCode);
+
+    const selectedCountry = selectCountryInput.value;
+    console.log(selectedCountry);
+
+    
+})
+
 selectCountryInput.addEventListener("change", (event) =>{
-    const countryCode = event.target.value;
+    const countryCode = event.currentTarget.value;
     console.log(countryCode);
+
+   const postalCodeObject = postalCodes.find((codeObj) => codeObj[countryCode]);
+   console.log(postalCodeObject);
+
+   const pattern = postalCodeObject[countryCode];
+   console.log(pattern);
+
+   console.log(postalCodeInput.value);
+
+   const postalCodeOBjRegexPattern = new RegExp(pattern);
+   console.log(postalCodeOBjRegexPattern);
+
+   const isValid = postalCodeOBjRegexPattern.test(postalCodeInput.value);
+
+   if (isValid) {
+    selectCountryInput.validity.valid;
+    selectCountryInput.setCustomValidity("");
+
+   }else {
+    selectCountryInput.setCustomValidity(`The postal code for ${selectCountryInput.value} is invalid`);
+    selectCountryInput.reportValidity();
+   }
+
+   console.log(isValid);
 
 }) 
 
 
-postalCodeInput.addEventListener("input", (event) => {
-    const userPostalCode = event.target.value;
-    console.log(userPostalCode);
-})
+
 
 
 function CheckError() {
@@ -79,7 +110,7 @@ passwordInput.addEventListener("blur", () => {
 
  passwordInput.addEventListener("input", () => {
    if (touched) {
-        if (!passwordInput.validity.valid) {
+        if (passwordInput.validity.valid) {
             passwordInput.setCustomValidity("");
     
             
