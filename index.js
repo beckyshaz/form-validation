@@ -40,21 +40,14 @@ emailInput.addEventListener("input", () => {
 
 
 
-countryInput.addEventListener("change", (event) =>{
-    const countryCode = event.currentTarget.value;
-    console.log(countryCode);
-
+countryInput.addEventListener("change", () =>{
+   
     checkPostalCodeAndCountry(countryInput, postalCodeInput);
 
 }) 
 
-postalCodeInput.addEventListener("input", (event) => {
-    const userPostalCode = event.target.value;
-    console.log(userPostalCode);
-
-    const selectedCountry = countryInput.value;
-    console.log(selectedCountry);
-
+postalCodeInput.addEventListener("input", () => {
+   
     checkPostalCodeAndCountry(countryInput, postalCodeInput);
     
 });
@@ -62,33 +55,33 @@ postalCodeInput.addEventListener("input", (event) => {
 
 
 
-function checkPostalCodeAndCountry(countryInput, postalCodeInput) {
-    if (countryInput.validity.valueMissing) {
-        countryInput.setCustomValidity("please choose your country");
-        countryInput.reportValidity();
+function checkPostalCodeAndCountry(countrysInput, codeInput) {
+    if (countrysInput.value === "") {
+        countrysInput.setCustomValidity("please choose your country");
+        countrysInput.reportValidity();
     }
 
     
 
-    if (countryInput.value === "" && postalCodeInput.value !== "") {
-        countryInput.setCustomValidity("please choose your country");
-        countryInput.reportValidity();
+    if (countrysInput.value === "" && codeInput.value !== "") {
+        countrysInput.setCustomValidity("please choose your country");
+        countrysInput.reportValidity();
         
 
     }
 
-    if (countryInput.value !== "" && postalCodeInput.validity.valueMissing) {
-        postalCodeInput.setCustomValidity("please enter your country code");
-        postalCodeInput.reportValidity();
+    if (countrysInput.value !== "" && codeInput.validity.valueMissing) {
+        codeInput.setCustomValidity("please enter your country code");
+        codeInput.reportValidity();
         
 
     }
 
-    if (countryInput.value !== "" && postalCodeInput.value !== "") {
-        const postalCodeObject = postalCodes.find((codeObj) => codeObj[countryInput.value]);
+    if (countrysInput.value !== "" && codeInput.value !== "") {
+        const postalCodeObject = postalCodes.find((codeObj) => codeObj[countrysInput.value]);
         console.log(postalCodeObject);
         
-        const pattern = postalCodeObject[countryInput.value];
+        const pattern = postalCodeObject[countrysInput.value];
         console.log(pattern);
         
         //console.log(postalCodeInput.value);
@@ -97,19 +90,19 @@ function checkPostalCodeAndCountry(countryInput, postalCodeInput) {
         
         console.log(postalCodeOBjRegexPattern);
         
-        const isValid = postalCodeOBjRegexPattern.test(postalCodeInput.value);
+        const isValid = postalCodeOBjRegexPattern.test(codeInput.value);
         
         if (isValid) {
-            countryInput.validity.valid;
+            countrysInput.validity.valid;
             
-            countryInput.setCustomValidity("");
+            countrysInput.setCustomValidity("");
 
-            postalCodeInput.validity.valid;
+            codeInput.validity.valid;
 
-            postalCodeInput.setCustomValidity("");
+            codeInput.setCustomValidity("");
         }else {
-            postalCodeInput.setCustomValidity(`The postal code for ${countryInput.value} is invalid`);
-            postalCodeInput.reportValidity();
+            codeInput.setCustomValidity(`The postal code for ${countrysInput.value} is invalid`);
+            codeInput.reportValidity();
    }
 
    console.log(isValid);
@@ -119,11 +112,6 @@ function checkPostalCodeAndCountry(countryInput, postalCodeInput) {
 
    
 }
-
-
-
-checkPostalCodeAndCountry();
-
 
 function CheckError() {
     emailInput.setCustomValidity("");
@@ -219,3 +207,39 @@ function checkConfirmPswdError() {
 
 
 }
+
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+
+
+    if (!emailInput.validity.valid) {
+        CheckError();
+    }else {emailInput.setCustomValidity("")
+    };
+    
+    
+    if (!passwordInput.validity.valid) {
+        checkPswdError();
+    }else {
+        passwordInput.setCustomValidity("");
+    }
+    
+    if (!confirmPswdInput.validity.valid) {
+        checkConfirmPswdError();
+    }else {
+        confirmPswdInput.setCustomValidity("");
+    }
+
+    if (!countryInput.validity.valid || !postalCodeInput.validity.valid) {
+        checkPostalCodeAndCountry(countryInput, postalCodeInput);
+
+    }else {
+        countryInput.setCustomValidity("");
+    }
+    
+    
+
+
+})
