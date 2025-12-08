@@ -21,12 +21,7 @@
             <div class="confirmPswdDiv">
                 <label for="confirmPassword">Please confirm Your password: </label>
                 <input type="password" name="confirmPsw" id="confirmPassword" required minlength="8">
-            </div>
- 
-
-            <div class="postalCodesDiv">
-                <label for="postalCode">Enter your country's postal code</label>
-                <input type="text" name="postalcode" id="postalCode" required>
+                <span class="passwordSuccess"></span>
             </div>
 
             <div class="countryDiv">
@@ -41,9 +36,16 @@
                     <option value="ES">Spain</option>
                     <option value="ET">Ethiopia</option>
                     <option value="GE">Georgia</option>
-                    <option value="KE" selected>Kenya</option>
+                    <option value="KE">Kenya</option>
                 </select>
             </div>
+
+            <div class="postalCodesDiv">
+                <label for="postalCode">Enter your country's postal code</label>
+                <input type="text" name="postalcode" id="postalCode" required>
+            </div>
+
+            
 
             <button type="submit" class="submitBtn">Submit</button>
             

@@ -19,7 +19,7 @@ const passwordInput = document.getElementById("password");
 
 const confirmPswdInput = document.getElementById("confirmPassword");
 
-const selectCountryInput = document.getElementById("country");
+const countryInput = document.getElementById("country");
 
 
 const postalCodeInput = document.getElementById("postalCode");
@@ -38,48 +38,91 @@ emailInput.addEventListener("input", () => {
 
 })
 
+
+
+countryInput.addEventListener("change", (event) =>{
+    const countryCode = event.currentTarget.value;
+    console.log(countryCode);
+
+    checkPostalCodeAndCountry(countryInput, postalCodeInput);
+
+}) 
+
 postalCodeInput.addEventListener("input", (event) => {
     const userPostalCode = event.target.value;
     console.log(userPostalCode);
 
-    const selectedCountry = selectCountryInput.value;
+    const selectedCountry = countryInput.value;
     console.log(selectedCountry);
 
+    checkPostalCodeAndCountry(countryInput, postalCodeInput);
     
-})
+});
 
-selectCountryInput.addEventListener("change", (event) =>{
-    const countryCode = event.currentTarget.value;
-    console.log(countryCode);
 
-   const postalCodeObject = postalCodes.find((codeObj) => codeObj[countryCode]);
-   console.log(postalCodeObject);
 
-   const pattern = postalCodeObject[countryCode];
-   console.log(pattern);
 
-   console.log(postalCodeInput.value);
+function checkPostalCodeAndCountry(countryInput, postalCodeInput) {
+    if (countryInput.validity.valueMissing) {
+        countryInput.setCustomValidity("please choose your country");
+        countryInput.reportValidity();
+    }
 
-   const postalCodeOBjRegexPattern = new RegExp(pattern);
-   console.log(postalCodeOBjRegexPattern);
+    
 
-   const isValid = postalCodeOBjRegexPattern.test(postalCodeInput.value);
+    if (countryInput.value === "" && postalCodeInput.value !== "") {
+        countryInput.setCustomValidity("please choose your country");
+        countryInput.reportValidity();
+        
 
-   if (isValid) {
-    selectCountryInput.validity.valid;
-    selectCountryInput.setCustomValidity("");
+    }
 
-   }else {
-    selectCountryInput.setCustomValidity(`The postal code for ${selectCountryInput.value} is invalid`);
-    selectCountryInput.reportValidity();
+    if (countryInput.value !== "" && postalCodeInput.validity.valueMissing) {
+        postalCodeInput.setCustomValidity("please enter your country code");
+        postalCodeInput.reportValidity();
+        
+
+    }
+
+    if (countryInput.value !== "" && postalCodeInput.value !== "") {
+        const postalCodeObject = postalCodes.find((codeObj) => codeObj[countryInput.value]);
+        console.log(postalCodeObject);
+        
+        const pattern = postalCodeObject[countryInput.value];
+        console.log(pattern);
+        
+        //console.log(postalCodeInput.value);
+        
+        const postalCodeOBjRegexPattern = new RegExp(pattern);
+        
+        console.log(postalCodeOBjRegexPattern);
+        
+        const isValid = postalCodeOBjRegexPattern.test(postalCodeInput.value);
+        
+        if (isValid) {
+            countryInput.validity.valid;
+            
+            countryInput.setCustomValidity("");
+
+            postalCodeInput.validity.valid;
+
+            postalCodeInput.setCustomValidity("");
+        }else {
+            postalCodeInput.setCustomValidity(`The postal code for ${countryInput.value} is invalid`);
+            postalCodeInput.reportValidity();
    }
 
    console.log(isValid);
 
-}) 
+
+    }
+
+   
+}
 
 
 
+checkPostalCodeAndCountry();
 
 
 function CheckError() {
@@ -131,7 +174,7 @@ function checkPswdError() {
         passwordInput.setCustomValidity("please enter a password");
 
     }
-    else if (passwordInput.validity.tooShort) {
+    if (passwordInput.validity.tooShort) {
         passwordInput.setCustomValidity(`The password you entered is too short,
              password should be atleast ${passwordInput.minLength} characters, you entered ${passwordInput.value.length}`);
     
@@ -155,14 +198,22 @@ function checkConfirmPswdError() {
     console.log(pswd);
     const confirmPswd = confirmPswdInput.value;
     console.log(confirmPswd);
+
+    const pswdSuccessSpan = document.querySelector(".passwordSuccess");
+
+    confirmPswdInput.setCustomValidity("");
+
     if (confirmPswdInput.validity.valueMissing) {
         confirmPswdInput.setCustomValidity("Confirm entered password");
     }
-    else if (confirmPswdInput.value !== passwordInput.value) {
+
+    if (confirmPswd !== "" &&  confirmPswd !== pswd) {
         confirmPswdInput.setCustomValidity("entered password should be the same as the previously entered password");
         
-    }else {
-        confirmPswdInput.setCustomValidity("");
+    }
+    if (confirmPswd !== "" && confirmPswd === pswd){
+        pswdSuccessSpan.textContent = "Passwords Match";
+        
     }
     confirmPswdInput.reportValidity();
 
